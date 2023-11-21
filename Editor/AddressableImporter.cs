@@ -276,7 +276,11 @@ public class AddressableImporter : AssetPostprocessor
             {
                 foreach (var dynamicLabel in rule.dynamicLabels)
                 {
-                    var label = rule.ParseReplacement(assetPath, dynamicLabel);
+                    var label = rule.ParseReplacement(assetPath, dynamicLabel).ToLowerInvariant();
+                    if (string.IsNullOrWhiteSpace(label))
+                    {
+                        continue;
+                    }
                     settings.AddLabel(label);
                     entry.labels.Add(label);
                 }
